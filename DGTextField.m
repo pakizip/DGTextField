@@ -12,11 +12,14 @@
 - (void)setup:(CGRect)frame;
 @end
 
+
+
 @implementation DGTextField
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    self.placeholderColor = [DGTextField defaultPlaceholderColor];
     [self setup:self.frame];
   }
   return self;
@@ -25,6 +28,8 @@
 -(id) initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+      
+    self.placeholderColor = [DGTextField defaultPlaceholderColor];
     [self setup:frame];
   }
   return self;
@@ -97,6 +102,46 @@
   CGRect rect = [super caretRectForPosition:position];
   rect.size.width = 0.0f;
   return rect;
+}
+
+
+////////////////////////////////////////////////////
+// @Pakizip Custom Cancel Button Implementation
+////////////////////////////////////////////////////
+
+- (void)setRightButtonWithImage:(UIImage*)image{
+    
+    if (image) {
+        
+        UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        clearButton.frame = CGRectMake(0, 0, 25, 25);
+        [clearButton setBackgroundImage:image forState:UIControlStateNormal];
+        [clearButton addTarget:self action:@selector(eraseText) forControlEvents:UIControlEventTouchUpInside];
+        self.rightView = clearButton;
+    }else{
+        
+        self.rightView = nil;
+    }
+}
+
+- (void)eraseText{
+    
+    self.text = @"";
+}
+
+////////////////////////////////////////////////////
+// @Pakizip Custom Placeholder color
+////////////////////////////////////////////////////
+
+- (void) drawPlaceholderInRect:(CGRect)rect {
+    [self.placeholderColor setFill];
+    [self.placeholder drawInRect:rect withFont:self.font lineBreakMode:UILineBreakModeClip alignment:self.textAlignment];
+}
+
++(UIColor *) defaultPlaceholderColor {
+
+    return [UIColor darkGrayColor];
+
 }
 
 @end
