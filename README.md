@@ -9,6 +9,8 @@ DGTextField
 ## WHAT CAN I CUSTOMIZE ##
 
 1. Carat Color (Cursor Color)  
+2. Right View Image (Clear Button)
+2. Placeholder Color
 
 ## SETUP ##
 
@@ -23,15 +25,23 @@ DGTextField
 DGTextField contains the following functions:
 
 1. cursorColor - Sets the color of the blinking cursor of the DGTextField instance.
+2. placeholderColor - Sets the color of the placeholder text of DGTextField instance.
 
+## INSTANCE METHODS ##
+
+	- (void)setRightButtonWithImage:(UIImage*)image;
 
 ## LICENSE ##
 
 The MIT License
 
-Copyright (c) 2012 Dov Goldberg
+Copyright (c) 2012 Dov Goldberg   
 EMAIL: dov.goldberg@ogonium.com   
 WEBSITE: http://www.ogonium.com
+
+Copyright (c) 2013 Pasquale Ambrosini   
+EMAIL: pakizip@gmail.com   
+WEBSITE: http://www.pasqualeambrosini.net   
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
