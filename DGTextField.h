@@ -26,6 +26,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface DGTextField : UITextField {
     UIView *cursor_;
 }
@@ -33,5 +35,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @property (nonatomic, strong) UIColor *cursorColor;
 @property (nonatomic, strong) UIColor *placeholderColor;
 
-- (void)setRightButtonWithImage:(UIImage*)image;
+- (void)setRightButtonImage:(UIImage*)image;
+- (void)setRightButtonImage:(UIImage*)image viewMode:(UITextFieldViewMode)mode;
+
 @end

@@ -9,15 +9,22 @@
 #import "DGTextField.h"
 
 @interface DGTextField (Private)
+
 - (void)setup:(CGRect)frame;
 @end
 
+@interface DGTextField ()
 
+@property (nonatomic, retain) UIButton *customClearButton;
+@property (nonatomic, retain) UIImage *clearButtonImage;
+@property (nonatomic, assign) UITextFieldViewMode privateRightViewMode;
+@end
 
 @implementation DGTextField
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
+    
   if (self) {
     self.placeholderColor = [DGTextField defaultPlaceholderColor];
     [self setup:self.frame];
@@ -62,7 +69,6 @@
 
 -(BOOL)becomeFirstResponder {
   cursor_.alpha = 1.0f;
-  
   [UIView animateWithDuration:0.5f
                         delay:0.6f
                       options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionCurveEaseInOut)
@@ -70,14 +76,36 @@
                      cursor_.alpha = 0.0f;
                    }
                    completion:^(BOOL finished){}];
-  
-  return [super becomeFirstResponder];
+
+    if (self.clearButtonImage) {
+        if (self.rightViewMode == UITextFieldViewModeNever || self.rightViewMode == UITextFieldViewModeUnlessEditing) {
+            [self setRightButtonImage:nil];
+        }else{
+            [self setRightButtonImage:self.clearButtonImage];
+            NSLog(@"Init");
+        }
+    }
+    return [super becomeFirstResponder];
+}
+
+- (BOOL)resignFirstResponder{
+   
+    if (self.clearButtonImage) { NSLog(@"Img");
+        if (self.privateRightViewMode == UITextFieldViewModeNever || self.privateRightViewMode == UITextFieldViewModeWhileEditing) {
+            [self setRightButtonImage:nil];
+        }else{
+            [self setRightButtonImage:self.clearButtonImage];
+            NSLog(@"OK3");
+        }
+    }
+    return [super resignFirstResponder];
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   // Hides Cursor when not editing
   cursor_.hidden = YES;
   [self bringSubviewToFront:cursor_];
+    
   return [super textRectForBounds:bounds];
 }
 
@@ -109,17 +137,40 @@
 // @Pakizip Custom Cancel Button Implementation
 ////////////////////////////////////////////////////
 
-- (void)setRightButtonWithImage:(UIImage*)image{
+- (void)setRightViewMode:(UITextFieldViewMode)rightViewMode{
+    self.privateRightViewMode = rightViewMode;
+}
+
+- (UITextFieldViewMode)rightViewMode{
+    
+    return self.privateRightViewMode;
+}
+
+- (void)setRightButtonImage:(UIImage*)image viewMode:(UITextFieldViewMode)mode{
+    
+    self.privateRightViewMode = mode;
+    [self setRightButtonImage:image];
+
+}
+
+- (void)setRightButtonImage:(UIImage*)image{
     
     if (image) {
         
-        UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        clearButton.frame = CGRectMake(0, 0, 25, 25);
-        [clearButton setBackgroundImage:image forState:UIControlStateNormal];
-        [clearButton addTarget:self action:@selector(eraseText) forControlEvents:UIControlEventTouchUpInside];
-        self.rightView = clearButton;
+        [self setClearButtonImage:image];
+        //self.clearButtonMode = UITextFieldViewModeNever;
+        
+        if (!self.customClearButton) {
+            self.customClearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.customClearButton.frame = CGRectMake(0, 0, 16, 16);
+            [self.customClearButton addTarget:self action:@selector(eraseText) forControlEvents:UIControlEventTouchUpInside];
+            self.rightView = self.customClearButton;
+        }
+        [self.customClearButton setBackgroundImage:image forState:UIControlStateNormal];
+        
     }else{
         
+        self.customClearButton = nil;
         self.rightView = nil;
     }
 }
