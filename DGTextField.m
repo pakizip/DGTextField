@@ -82,7 +82,6 @@
             [self setRightButtonImage:nil];
         }else{
             [self setRightButtonImage:self.clearButtonImage];
-            NSLog(@"Init");
         }
     }
     return [super becomeFirstResponder];
@@ -90,12 +89,11 @@
 
 - (BOOL)resignFirstResponder{
    
-    if (self.clearButtonImage) { NSLog(@"Img");
+    if (self.clearButtonImage) {
         if (self.privateRightViewMode == UITextFieldViewModeNever || self.privateRightViewMode == UITextFieldViewModeWhileEditing) {
             [self setRightButtonImage:nil];
         }else{
             [self setRightButtonImage:self.clearButtonImage];
-            NSLog(@"OK3");
         }
     }
     return [super resignFirstResponder];
