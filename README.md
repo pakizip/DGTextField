@@ -36,6 +36,10 @@ DGTextField contains the following functions:
 
 The MIT License
 
+Copyright (c) 2012 Dov Goldberg   
+EMAIL: dov.goldberg@ogonium.com   
+WEBSITE: http://www.ogonium.com
+
 Copyright (c) 2013 Pasquale Ambrosini   
 EMAIL: pakizip@gmail.com   
 WEBSITE: http://www.pasqualeambrosini.net   
